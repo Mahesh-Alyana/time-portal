@@ -1,30 +1,70 @@
-# Time Portal
-Time Portal is a web app that challenges users to solve puzzles and clues related to time travel and time paradoxes. The app is designed to test problem-solving skills and creativity, while also providing an immersive and entertaining experience.
+# Getting Started with Create React App
 
-## Theme
-The theme of Time Portal is centered around time travel and the concept of being "lost in time." Users are presented with various puzzles and clues related to different historical periods and paradoxes, such as meeting their future selves or changing events in the past.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Specific Theme Elements
-Some of the specific elements included in the Time Portal theme are:
+## Available Scripts
 
-* Time machine interface:
-      The app includes a user interface that resembles a time machine, with buttons and dials to control the navigation and settings.
-* Historical settings: 
-      Each puzzle or clue takes place in a different historical setting, such as ancient Egypt, medieval Europe, or the Wild West.
-* Time paradoxes: 
-      Some puzzles involve paradoxical situations, such as meeting oneself or changing the course of history.
+In the project directory, you can run:
 
-## Features
+### `npm start`
 
-The Time Portal app includes the following features:
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-* User authentication: 
-Users can create an account and log in to track their progress and save their scores.
-* Puzzle challenges: 
-Each challenge consists of a series of clues and puzzles that the user must solve in order to progress to the next level.
-* Hint system: 
-Users can request hints for each puzzle if they get stuck or need some guidance.
-* Score tracking: 
-The app tracks the user's score based on the number of puzzles solved and the time taken to complete them.
-* Social sharing: 
-Users can share their scores and progress on social media platforms.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
