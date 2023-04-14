@@ -1,0 +1,18 @@
+.background {
+    position: 'relatve';
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    display: flex;
+    align-items: center;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("https://wallpapercave.com/wp/wp4372833.jpg")
+}

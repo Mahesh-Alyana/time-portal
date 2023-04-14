@@ -9,7 +9,7 @@
     height: 300px;
     width: 2px;
     background: linear-gradient(to bottom, #0000001e 0%, #000000 40%, #000000 40%, #000000 60%, #000000a2 60%, #0000001e 100%);
-    margin: '0 20px'
+    margin: '0 40px'
 }
 
 .PanelComponents {
@@ -44,4 +44,30 @@
     border-style: ridge;
     border-radius: 32px;
     box-shadow: inset;
+}
+
+
+.images {
+    width: 20%;
+    padding: 10px;
+}
+
+.arrowopen {
+    transform: rotate(0deg),
+}
+
+.arrowclosed {
+    transform: rotate(90deg),
+}
+
+.open {
+    transform: translateX(0%);
+}
+
+.closed {
+    transform: translateX(100%);
+}
+
+.closeComponent {
+    visibility: collapse;
 }
