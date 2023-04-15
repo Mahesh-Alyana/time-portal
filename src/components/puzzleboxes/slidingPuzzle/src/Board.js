@@ -2,19 +2,33 @@ import React, { useState } from "react";
 import Tile from "./Tile";
 import { TILE_COUNT, GRID_SIZE, BOARD_SIZE } from "./constants";
 import { canSwap, shuffle, swap, isSolved } from "./helpers";
+import { doc, updateDoc } from "firebase/firestore";
+import {
+  db,
+  auth,
+} from "/home/mahesh/Documents/timeportal/src/firebase-config.js";
+
 import "./index.css";
 
 function Board({ imgUrl }) {
+  const docRef = doc(
+    db,
+    "users",
+    auth.currentUser.uid,
+    "puzzles",
+    "memoryGame"
+  );
+  const nextGame = doc(db, "users", auth.currentUser.uid);
+
   const [tiles, setTiles] = useState([...Array(TILE_COUNT).keys()]);
   const [isStarted, setIsStarted] = useState(false);
-  console.log("is started:", isStarted);
 
   const shuffleTiles = () => {
     const shuffledTiles = shuffle(tiles);
     setTiles(shuffledTiles);
   };
 
-  const swapTiles = (tileIndex) => {
+  const swapTiles = async (tileIndex) => {
     if (canSwap(tileIndex, tiles.indexOf(tiles.length - 1))) {
       const swappedTiles = swap(
         tiles,
@@ -25,8 +39,13 @@ function Board({ imgUrl }) {
     }
   };
 
-  const handleTileClick = (index) => {
+  const handleTileClick = async (index) => {
     swapTiles(index);
+    console.log("sloved" + isSolved);
+    if (isSolved(tiles)) {
+      const game = await updateDoc(docRef, { completed: true });
+      const gmaes = await updateDoc(nextGame, { level: "sudoku" });
+    }
   };
 
   const handleShuffleClick = () => {

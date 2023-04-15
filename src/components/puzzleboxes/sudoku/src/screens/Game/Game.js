@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
 import "./Game.css";
+import { doc, updateDoc } from "firebase/firestore";
+import {
+  db,
+  auth,
+} from "/home/mahesh/Documents/timeportal/src/firebase-config.js";
 
 import { Grid, ChoiceBoard, Button } from "../../components/index.js";
 
@@ -16,7 +21,10 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 
 const mediumMaxEmptyCells = 40;
 
-const Game = () => {
+const SudokuGame = () => {
+  const docRef = doc(db, "users", auth.currentUser.uid, "puzzles", "sudoku");
+  const nextGame = doc(db, "users", auth.currentUser.uid);
+
   const [grid, setGrid] = useLocalStorage("currentGrid", null);
   const [startingGrid, setStartingGrid] = useLocalStorage("startingGrid", null);
   const [clickValue, setClickValue] = useLocalStorage("clickValue", 1);
@@ -52,7 +60,7 @@ const Game = () => {
     setGrid(arrayDeepCopy(startingGrid));
   };
 
-  const handleCellClick = (row, column, isModifiable) => {
+  const handleCellClick = async (row, column, isModifiable) => {
     if (!isModifiable) {
       animateElement(".grid-table", "headShake");
       return;
@@ -72,6 +80,12 @@ const Game = () => {
     if (playerWon) {
       // Dosomething here
       setIsPlayerWon(true);
+      const game = await updateDoc(docRef, { completed: true });
+      const gmaes = await updateDoc(nextGame, {
+        level: "memoryGame",
+        completed: true,
+        started: false,
+      });
     }
 
     // setting the value to the grid and also to the local storage
@@ -105,4 +119,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default SudokuGame;

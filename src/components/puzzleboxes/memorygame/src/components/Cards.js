@@ -9,8 +9,17 @@ import reactImage from "../img/react.png";
 import vueImage from "../img/vue.png";
 import angualarImage from "../img/angular.png";
 import nodejsImage from "../img/nodejs.png";
-
+import { doc, updateDoc } from "firebase/firestore";
+import { db, auth } from "../../../../../firebase-config.js";
 function Cards() {
+  const docRef = doc(
+    db,
+    "users",
+    auth.currentUser.uid,
+    "puzzles",
+    "memoryGame"
+  );
+  const nextGame = doc(db, "users", auth.currentUser.uid);
   const [items, setItems] = useState(
     [
       { id: 1, img: htmlImage, stat: "" },
@@ -34,7 +43,7 @@ function Cards() {
   const [count, setCount] = useState(16);
   const [prev, setPrev] = useState(-1);
 
-  function check(current) {
+  async function check(current) {
     if (items[current].id === items[prev].id && current !== prev) {
       items[current].stat = "correct";
       items[prev].stat = "correct";
@@ -51,6 +60,12 @@ function Cards() {
         setItems([...items]);
         setPrev(-1);
       }, 1000);
+    }
+    console.log(count);
+
+    if (count === 2) {
+      const game = await updateDoc(docRef, { completed: true });
+      const gmaes = await updateDoc(nextGame, { level: "slidingGame" });
     }
   }
 

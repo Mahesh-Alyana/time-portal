@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Board from "./Board";
 import { updateURLParameter } from "./helpers";
 
-function App() {
+function SlidingGame() {
   const [imgUrl, setImgUrl] = useState("");
 
   useEffect(() => {
@@ -22,11 +22,11 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="slidingPuzzle">
       <Board imgUrl={imgUrl} />
       <input value={imgUrl} onChange={handleImageChange} />
     </div>
   );
 }
 
-export default App;
+export default SlidingGame;
