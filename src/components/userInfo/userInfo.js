@@ -10,17 +10,26 @@ function UserGameDetails(params) {
   const [isOpen, setIsOpen] = useState(true);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
+  const [time, setTime] = useState("");
+  const [gameTime, setGameTime] = useState("");
+
   var timer;
   useEffect(() => {
+    const storedName = localStorage.getItem("time");
+    if (storedName) {
+      setTime(storedName);
+    }
     timer = setInterval(() => {
       setSeconds(seconds + 1);
       if (seconds === 59) {
         setMinutes(minutes + 1);
         setSeconds(0);
       }
+      localStorage.setItem("name", minutes + ":" + seconds);
     }, 1000);
+    console.log(time);
     return () => clearInterval(timer);
-  });
+  }, [time]);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -36,10 +45,7 @@ function UserGameDetails(params) {
       >
         <div className="stats">
           <img src={key} alt="keys" className="images" />
-          <h1>
-            {minutes < 10 ? "0" + minutes : minutes}:
-            {seconds < 10 ? "0" + seconds : seconds}
-          </h1>
+          <h1>{time}</h1>
         </div>
         <div className="stats">
           <img src={link} alt="portals" className="images" />

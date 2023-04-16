@@ -35,9 +35,9 @@ function HomeScreen() {
     getUsers();
   }, [users]);
 
-  const memoryGameComponent = <MemoryGame></MemoryGame>;
-  const sliginGameComponent = <SlidingGame></SlidingGame>;
-  const sudokuGameComponent = <SudokuGame></SudokuGame>;
+  const memoryGameComponent = <MemoryGame score={users.score}></MemoryGame>;
+  const sliginGameComponent = <SlidingGame score={users.score}></SlidingGame>;
+  const sudokuGameComponent = <SudokuGame score={users.score}></SudokuGame>;
 
   const initialPrompt = (
     <div

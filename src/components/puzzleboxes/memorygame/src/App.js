@@ -1,12 +1,12 @@
 import Cards from "./components/Cards";
 import "../src/index.css";
 
-function MemoryGame() {
+function MemoryGame(props) {
   return (
     <div>
       <h1>Memory Game - React</h1>
       <div className="App">
-        <Cards />
+        <Cards score={props.score} />
       </div>
     </div>
   );

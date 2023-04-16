@@ -21,7 +21,7 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 
 const mediumMaxEmptyCells = 40;
 
-const SudokuGame = () => {
+const SudokuGame = (props) => {
   const docRef = doc(db, "users", auth.currentUser.uid, "puzzles", "sudoku");
   const nextGame = doc(db, "users", auth.currentUser.uid);
 
@@ -82,6 +82,7 @@ const SudokuGame = () => {
       setIsPlayerWon(true);
       const game = await updateDoc(docRef, { completed: true });
       const gmaes = await updateDoc(nextGame, {
+        score: props.score,
         level: "memoryGame",
         completed: true,
         started: false,

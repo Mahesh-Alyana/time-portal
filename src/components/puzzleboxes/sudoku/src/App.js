@@ -3,10 +3,10 @@ import Game from "./screens/Game/Game";
 
 import "./App.css";
 
-const App = () => {
+const App = (props) => {
   return (
     <div className="App">
-      <Game />
+      <Game score={props.score}></Game>
     </div>
   );
 };

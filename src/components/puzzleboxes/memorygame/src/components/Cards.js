@@ -11,7 +11,7 @@ import angualarImage from "../img/angular.png";
 import nodejsImage from "../img/nodejs.png";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../../../../../firebase-config.js";
-function Cards() {
+function Cards(props) {
   const docRef = doc(
     db,
     "users",
@@ -65,7 +65,10 @@ function Cards() {
 
     if (count === 2) {
       const game = await updateDoc(docRef, { completed: true });
-      const gmaes = await updateDoc(nextGame, { level: "slidingGame" });
+      const gmaes = await updateDoc(nextGame, {
+        level: "slidingGame",
+        score: props.score,
+      });
     }
   }
 
