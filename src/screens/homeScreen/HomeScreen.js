@@ -46,6 +46,8 @@ function HomeScreen() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
+        alignContent: "center",
       }}
     >
       <h1>Solve the challenge to unlock the portal</h1>
@@ -54,14 +56,13 @@ function HomeScreen() {
           await updateDoc(userDocument, { started: true });
         }}
         style={{
-          width: "30%",
-          borderRadius: "20px",
-          padding: "20px 40px",
           color: "white",
-          fontSize: "20px",
-          fontWeight: "500",
+          padding: "20px 40px",
+          borderRadius: "20px",
           backgroundColor:
             "linear-gradient(110deg, rgba(22.91, 0, 163.62, 0.70), rgba(35.93, 0.27, 255, 0.75))",
+          boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+          // "linear-gradient(110deg, rgba(22.91, 0, 163.62, 0.70), rgba(35.93, 0.27, 255, 0.75))",
         }}
       >
         START
@@ -99,18 +100,22 @@ function HomeScreen() {
         <div className="stageBoard">
           <h1>Stage : {users.level}</h1>
         </div>
-        {users.started ? gamePrompt : initialPrompt}
+        {users.started ? gamePrompt : <></>}
         <div className="centerbarComponents">
           <img
             src={
+              users.started && users.level == "slidingGame" ? (
+                slidingimg
+              ) : users.started && users.level == "memoryGame" ? (
+                memoryimg
+              ) : users.started && users.level == "sudoku" ? (
+                sudokuimg
+              ) : (
+                <div></div>
+              )
               // users.level == "neonClock"
               //   ? timeimg
               //   :
-              users.level == "slidingGame"
-                ? slidingimg
-                : users.level == "memoryGame"
-                ? memoryimg
-                : sudokuimg
             }
             alt=""
           />
@@ -118,15 +123,13 @@ function HomeScreen() {
             // users.level == "neonClock"
             //   ? timeimg
             //   :
-            users.started && users.level == "slidingGame" ? (
-              sliginGameComponent
-            ) : users.started && users.level == "memoryGame" ? (
-              memoryGameComponent
-            ) : users.started && users.level == "sudoku" ? (
-              sudokuGameComponent
-            ) : (
-              <div></div>
-            )
+            users.started && users.level == "slidingGame"
+              ? sliginGameComponent
+              : users.started && users.level == "memoryGame"
+              ? memoryGameComponent
+              : users.started && users.level == "sudoku"
+              ? sudokuGameComponent
+              : initialPrompt
           }
           <UserGameDetails></UserGameDetails>
         </div>
