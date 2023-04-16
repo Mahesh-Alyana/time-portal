@@ -95,6 +95,7 @@ function AuthScreen(params) {
                     password
                   ).then(async () => {
                     await setDoc(doc(db, "users", auth.currentUser.uid), {
+                      id: auth.currentUser.uid,
                       userName: userName,
                       emailID: emailID,
                       level: "memoryGame",
@@ -157,8 +158,8 @@ function AuthScreen(params) {
                         score: 0,
                       }
                     );
+                    console.log(auth.currentUser.uid);
                     localStorage.setItem("uid", auth.currentUser.uid);
-
                     navigate("/startGame", { replace: "true" });
                   });
                 } else {

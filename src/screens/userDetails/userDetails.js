@@ -111,7 +111,13 @@ function UserDetails(props) {
 
           <div
             onClick={async () => {
-              navigate(-1);
+              if (localStorage.getItem("uid")) {
+                auth.signOut();
+                navigate("/");
+              } else {
+                navigate(-1);
+              }
+              localStorage.removeItem("uid");
             }}
             style={{
               color: "white",
