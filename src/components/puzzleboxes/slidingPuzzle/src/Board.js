@@ -10,7 +10,7 @@ import {
 
 import "./index.css";
 
-function Board({ imgUrl, score }) {
+function Board({ imgUrl, score, func }) {
   const docRef = doc(
     db,
     "users",
@@ -43,10 +43,14 @@ function Board({ imgUrl, score }) {
     swapTiles(index);
     console.log("sloved" + isSolved);
     if (isSolved(tiles)) {
-      const game = await updateDoc(docRef, { completed: true });
+      const game = await updateDoc(docRef, {
+        completed: true,
+        score: 500,
+        accuracy: 100,
+      });
       const gmaes = await updateDoc(nextGame, {
         level: "sudoku",
-        score: score,
+        score: score + 500,
       });
     }
   };

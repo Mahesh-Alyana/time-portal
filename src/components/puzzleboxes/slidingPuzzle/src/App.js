@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Board from "./Board";
 import { updateURLParameter } from "./helpers";
+import imageData from "../../../../assets/images/development/egypt.jpg";
 
 function SlidingGame(props) {
-  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState(imageData);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,8 +24,8 @@ function SlidingGame(props) {
 
   return (
     <div className="slidingPuzzle">
-      <Board score={props.score} imgUrl={imgUrl} />
-      <input value={imgUrl} onChange={handleImageChange} />
+      <Board score={props.score} imgUrl={imgUrl} func={props.func} />
+      {/* <input value={imgUrl} onChange={handleImageChange} /> */}
     </div>
   );
 }

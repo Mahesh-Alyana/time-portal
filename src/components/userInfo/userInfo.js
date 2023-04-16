@@ -5,8 +5,53 @@ import arrowleft from "../../assets/images/development/arrowleft.svg";
 import key from "../../assets/images/development/key.png";
 import link from "../../assets/images/development/link.png";
 import lock from "../../assets/images/development/lock.png";
+import { db } from "../../firebase-config";
+import { getDoc, doc } from "firebase/firestore";
+import sudokuimg from "../../assets/images/development/sudoku.png";
+import slidingimg from "../../assets/images/development/slidingimg.png";
+import memoryimg from "../../assets/images/development/memoryimg.png";
 
 function UserGameDetails(params) {
+  const storedUid = localStorage.getItem("uid");
+  const [users, setUserData] = useState({});
+  const [memoryGame, setmemoryGame] = useState({});
+  const [slidingGame, setslidingGame] = useState({});
+  const [sudoku, setSudoku] = useState({});
+  const [count, setCount] = useState(0);
+  const userDocument = doc(db, "users", storedUid);
+  const memoryGameDocument = doc(
+    db,
+    "users",
+    storedUid,
+    "puzzles",
+    "memoryGame"
+  );
+  const slidingGameDocument = doc(
+    db,
+    "users",
+    storedUid,
+    "puzzles",
+    "slidingGame"
+  );
+  const sudokuGameDocument = doc(db, "users", storedUid, "puzzles", "sudoku");
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const userData = await getDoc(userDocument);
+      setUserData(userData.data());
+      console.log(userData);
+      const gameData = await getDoc(memoryGameDocument);
+      setmemoryGame(gameData.data());
+      console.log(gameData.data());
+      const gameData1 = await getDoc(slidingGameDocument);
+      setslidingGame(gameData1.data());
+      console.log(gameData1.data());
+      const gameData2 = await getDoc(sudokuGameDocument);
+      setSudoku(gameData2.data());
+      console.log(gameData2.data());
+    };
+    getUsers();
+  }, [params]);
   const [isOpen, setIsOpen] = useState(true);
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
@@ -36,24 +81,32 @@ function UserGameDetails(params) {
   };
   return (
     <div className={isOpen ? "panel open" : "panel closed"}>
-      <img src={isOpen ? arrow : arrowleft} alt="arrow" onClick={handleClick} />
       <div className="divider"></div>
       <div
         className={
           isOpen ? "PanelComponents open" : "PanelComponents closeComponent"
         }
       >
-        <div className="stats">
-          <img src={key} alt="keys" className="images" />
-          <h1>{time}</h1>
+        <div
+          className="stats"
+          style={{ background: memoryGame.completed ? "green" : "" }}
+        >
+          <img src={memoryimg} alt="memory" className="images" />
+          {memoryGame.completed ? <h2>{memoryGame.accuracy}</h2> : <></>}
         </div>
-        <div className="stats">
-          <img src={link} alt="portals" className="images" />
-          <h2>2 portals</h2>
+        <div
+          className="stats"
+          style={{ background: slidingGame.completed ? "green" : "" }}
+        >
+          <img src={slidingimg} alt="sliding" className="images" />
+          {slidingGame.completed ? <h2>{slidingGame.accuracy}</h2> : <></>}
         </div>
-        <div className="stats">
-          <img src={lock} alt="locked" className="images" />
-          <h2>2 locked</h2>
+        <div
+          className="stats"
+          style={{ background: sudoku.completed ? "green" : "" }}
+        >
+          <img src={sudokuimg} alt="sudoku" className="images" />
+          {sudoku.completed ? <h2>{sudoku.accuracy}</h2> : <></>}
         </div>
       </div>
     </div>

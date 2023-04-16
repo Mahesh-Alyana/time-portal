@@ -9,10 +9,10 @@ import UserGameDetails from "../../components/userInfo/userInfo.js";
 import SlidingGame from "../../components/puzzleboxes/slidingPuzzle/src/App.js";
 import MemoryGame from "../../components/puzzleboxes/memorygame/src/App.js";
 import SudokuGame from "../../components/puzzleboxes/sudoku/src/screens/Game/Game";
-import CipherPuzzle from "../../components/puzzleboxes/Cipher puzzle/cipherpuzzle";
 import { FaSyncAlt } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { db, auth } from "../../firebase-config.js";
+import { useNavigate } from "react-router-dom";
 import {
   collection,
   getDocs,
@@ -24,16 +24,36 @@ import { useState, useEffect, useCallback } from "react";
 import "./homeScreen.css";
 
 function HomeScreen() {
+  const navigate = useNavigate();
   const [users, setUserData] = useState({});
-  const userDocument = doc(db, "users", auth.currentUser.uid);
+  const [game, setGameData] = useState({});
+  const [count, setCount] = useState(0);
+  const storedName = localStorage.getItem("uid");
+  const userDocument = doc(db, "users", storedName);
+  const updateGame = async (gameName) => {
+    await updateDoc(userDocument, { level: gameName });
+    if (count == 0) {
+      setCount(1);
+    } else {
+      setCount(0);
+    }
+  };
   useEffect(() => {
     const getUsers = async () => {
       const userData = await getDoc(userDocument);
       setUserData(userData.data());
       console.log(userData);
+      const gameData = await getDoc(
+        doc(db, "users", storedName, "puzzles", userData.data().level)
+      );
+      setGameData(gameData.data());
+      console.log(userData.data().completed);
+      if (userData.data().completed) {
+        navigate("/chronosphere");
+      }
     };
     getUsers();
-  }, [users]);
+  }, [count]);
 
   const memoryGameComponent = <MemoryGame score={users.score}></MemoryGame>;
   const sliginGameComponent = <SlidingGame score={users.score}></SlidingGame>;
@@ -54,12 +74,17 @@ function HomeScreen() {
       <div
         onClick={async () => {
           await updateDoc(userDocument, { started: true });
+          if (count == 0) {
+            setCount(1);
+          } else {
+            setCount(0);
+          }
         }}
         style={{
           color: "white",
           padding: "20px 40px",
           borderRadius: "20px",
-          backgroundColor:
+          background:
             "linear-gradient(110deg, rgba(22.91, 0, 163.62, 0.70), rgba(35.93, 0.27, 255, 0.75))",
           boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
           // "linear-gradient(110deg, rgba(22.91, 0, 163.62, 0.70), rgba(35.93, 0.27, 255, 0.75))",
@@ -73,65 +98,90 @@ function HomeScreen() {
   const gamePrompt = (
     <div className="heading">
       <h1>Solve the challenge to unlock the portal</h1>
-      <FaSyncAlt></FaSyncAlt>
-      <AiOutlineInfoCircle />
     </div>
   );
   return (
-    <div className="background">
-      <div className="topbar">
-        <div className="profile">
-          <img src={profile} alt="profile" />
-          <h1>{users.userName}</h1>
-        </div>
-        <div className="profile">
-          <h1>SCORE :</h1>
-          <div className="scoreboard">
+    <div className="container">
+      <div className="background">
+        <div className="topbar">
+          <div className="profile">
             <img
-              src={scoreCoin}
-              alt="score coin"
-              style={{ paddingRight: "20px" }}
+              src={profile}
+              alt="profile"
+              onClick={() => {
+                navigate("/userDetails");
+              }}
             />
-            <h1>{users.score}</h1>
+            <h1>{users.userName}</h1>
+          </div>
+          <div className="profile">
+            <h1>SCORE :</h1>
+            <div className="scoreboard">
+              <img
+                src={scoreCoin}
+                alt="score coin"
+                style={{ paddingRight: "20px" }}
+              />
+              <h1>{users.score}</h1>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="centerbar">
-        <div className="stageBoard">
-          <h1>Stage : {users.level}</h1>
-        </div>
-        {users.started ? gamePrompt : <></>}
-        <div className="centerbarComponents">
-          <img
-            src={
-              users.started && users.level == "slidingGame" ? (
-                slidingimg
-              ) : users.started && users.level == "memoryGame" ? (
-                memoryimg
-              ) : users.started && users.level == "sudoku" ? (
-                sudokuimg
-              ) : (
-                <div></div>
-              )
+        <div className="centerbar">
+          <div className="stageBoard">
+            <h1>Stage : {users.level}</h1>
+          </div>
+          {users.started ? gamePrompt : <></>}
+          <div className="centerbarComponents">
+            <img
+              src={
+                users.started && users.level == "slidingGame" ? (
+                  slidingimg
+                ) : users.started && users.level == "memoryGame" ? (
+                  memoryimg
+                ) : users.started && users.level == "sudoku" ? (
+                  sudokuimg
+                ) : (
+                  <div></div>
+                )
+                // users.level == "neonClock"
+                //   ? timeimg
+                //   :
+              }
+              alt=""
+            />
+            {
               // users.level == "neonClock"
               //   ? timeimg
               //   :
+              users.started && users.level == "slidingGame"
+                ? sliginGameComponent
+                : users.started && users.level == "memoryGame"
+                ? memoryGameComponent
+                : users.started && users.level == "sudoku"
+                ? sudokuGameComponent
+                : initialPrompt
             }
-            alt=""
-          />
-          {
-            // users.level == "neonClock"
-            //   ? timeimg
-            //   :
-            users.started && users.level == "slidingGame"
-              ? sliginGameComponent
-              : users.started && users.level == "memoryGame"
-              ? memoryGameComponent
-              : users.started && users.level == "sudoku"
-              ? sudokuGameComponent
-              : initialPrompt
-          }
-          <UserGameDetails></UserGameDetails>
+            <UserGameDetails data={count}></UserGameDetails>
+          </div>
+          <div
+            onClick={async () => {
+              if (count == 0) {
+                setCount(1);
+              } else {
+                setCount(0);
+              }
+            }}
+            style={{
+              color: "white",
+              padding: "20px 40px",
+              borderRadius: "20px",
+              background:
+                "linear-gradient(110deg, rgba(22.91, 0, 163.62, 0.70), rgba(35.93, 0.27, 255, 0.75))",
+              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.25)",
+            }}
+          >
+            SAVE
+          </div>
         </div>
       </div>
     </div>

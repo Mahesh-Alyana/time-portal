@@ -17,7 +17,7 @@ function AuthScreen(params) {
 
   return (
     <div className="authBackground">
-      <div className="centerbar">
+      <div className="authcenterbar">
         <h1>LOGIN TO START PLAYING</h1>
         <div className="inputBG">
           <span>
@@ -71,103 +71,98 @@ function AuthScreen(params) {
           className="authButton"
           onClick={async () => {
             console.log("loging");
-            try {
-              console.log("trying1");
-
-              const user = await signInWithEmailAndPassword(
-                auth,
-                emailID,
-                password
-              ).then(() => {
-                navigate("/startGame");
-              });
-              console.log(user);
-            } catch (error) {
-              console.log("error");
-              console.log(error.code);
-              if (error.code === "auth/user-not-found") {
-                await createUserWithEmailAndPassword(
+            if (emailID == "admin@gmail.com" && password == "admin@123") {
+              navigate("/admin");
+            } else {
+              try {
+                console.log("trying1");
+                const user = await signInWithEmailAndPassword(
                   auth,
                   emailID,
                   password
-                ).then(async () => {
-                  await setDoc(doc(db, "users", auth.currentUser.uid), {
-                    userName: userName,
-                    emailID: emailID,
-                    level: "memoryGame",
-                    started: false,
-                    score: 0,
-                    accuracy: 0,
-                    time: "00:00",
-                    sessionTime: "00:00",
-                  });
-                  await setDoc(
-                    doc(
-                      db,
-                      "users",
-                      auth.currentUser.uid,
-                      "puzzles",
-                      "neonClock"
-                    ),
-                    {
-                      started: false,
-                      completed: false,
-                      time: "00::00",
-                      trials: 0,
-                      accuracy: 0,
-                      score: 0,
-                    }
-                  );
-                  await setDoc(
-                    doc(
-                      db,
-                      "users",
-                      auth.currentUser.uid,
-                      "puzzles",
-                      "memoryGame"
-                    ),
-                    {
-                      started: false,
-                      completed: false,
-                      time: "00::00",
-                      trials: 0,
-                      wrongPairs: 0,
-                      accuracy: 0,
-                      score: 0,
-                    }
-                  );
-                  await setDoc(
-                    doc(
-                      db,
-                      "users",
-                      auth.currentUser.uid,
-                      "puzzles",
-                      "slidingGame"
-                    ),
-                    {
-                      started: false,
-                      completed: false,
-                      time: "00::00",
-                      trials: 0,
-                      moves: 0,
-                      accuracy: 0,
-                      score: 0,
-                    }
-                  );
-                  await setDoc(
-                    doc(db, "users", auth.currentUser.uid, "puzzles", "sudoku"),
-                    {
-                      started: false,
-                      completed: false,
-                      time: "00::00",
-                      trials: 0,
-                      accuracy: 0,
-                      score: 0,
-                    }
-                  );
-                  navigate("/startGame");
+                ).then(() => {
+                  localStorage.setItem("uid", auth.currentUser.uid);
+                  navigate("/startGame", { replace: "true" });
                 });
-              } else {
+                console.log(user);
+              } catch (error) {
+                console.log("error");
+                console.log(error.code);
+                if (error.code === "auth/user-not-found") {
+                  await createUserWithEmailAndPassword(
+                    auth,
+                    emailID,
+                    password
+                  ).then(async () => {
+                    await setDoc(doc(db, "users", auth.currentUser.uid), {
+                      userName: userName,
+                      emailID: emailID,
+                      level: "memoryGame",
+                      started: false,
+                      score: 0,
+                      accuracy: 0,
+                      time: "00:00",
+                      sessionTime: "00:00",
+                    });
+                    await setDoc(
+                      doc(
+                        db,
+                        "users",
+                        auth.currentUser.uid,
+                        "puzzles",
+                        "memoryGame"
+                      ),
+                      {
+                        started: false,
+                        completed: false,
+                        time: "00::00",
+                        trials: 0,
+                        wrongPairs: 0,
+                        accuracy: 0,
+                        score: 0,
+                      }
+                    );
+                    await setDoc(
+                      doc(
+                        db,
+                        "users",
+                        auth.currentUser.uid,
+                        "puzzles",
+                        "slidingGame"
+                      ),
+                      {
+                        started: false,
+                        completed: false,
+                        time: "00::00",
+                        trials: 0,
+                        moves: 0,
+                        accuracy: 0,
+                        score: 0,
+                      }
+                    );
+                    await setDoc(
+                      doc(
+                        db,
+                        "users",
+                        auth.currentUser.uid,
+                        "puzzles",
+                        "sudoku"
+                      ),
+                      {
+                        started: false,
+                        completed: false,
+                        time: "00::00",
+                        trials: 0,
+                        accuracy: 0,
+                        score: 0,
+                      }
+                    );
+                    localStorage.setItem("uid", auth.currentUser.uid);
+
+                    navigate("/startGame", { replace: "true" });
+                  });
+                } else {
+                }
               }
             }
           }}

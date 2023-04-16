@@ -1,13 +1,18 @@
 {
   "files": {
-    "main.css": "/static/css/main.b5f5386d.css",
-    "main.js": "/static/js/main.486d1864.js",
+    "main.css": "/static/css/main.9f312db9.css",
+    "main.js": "/static/js/main.db6dbbb1.js",
     "static/js/787.387537db.chunk.js": "/static/js/787.387537db.chunk.js",
     "static/media/timetravel7.gif": "/static/media/timetravel7.6c90c29791d62901fcac.gif",
+    "static/media/timetravel8.gif": "/static/media/timetravel8.15cff2ab5aaa45f922ad.gif",
     "static/media/timetravel2.gif": "/static/media/timetravel2.0a2fc6cf9da533e88a6e.gif",
+    "static/media/timetravel4.gif": "/static/media/timetravel4.4e7fc2e3a7bd27f06786.gif",
+    "static/media/timetravel3.gif": "/static/media/timetravel3.d9a0e9d1afd1de9fda69.gif",
+    "static/media/timetravel1.gif": "/static/media/timetravel1.a28c410c6e76c46cb674.gif",
     "static/media/profile.svg": "/static/media/profile.7f5b3d652fab05d9cde2a55dc36f0072.svg",
     "static/media/chronosphere.png": "/static/media/chronosphere.1584ea1d439aae4971f1.png",
     "static/media/journey.png": "/static/media/journey.776d0d956dec270ea2a2.png",
+    "static/media/egypt.jpg": "/static/media/egypt.cae2b91c576dfdcca22a.jpg",
     "static/media/timemachine.png": "/static/media/timemachine.2aa4be30921a32733801.png",
     "static/media/angular.png": "/static/media/angular.2a94d7a4ed5d0938f132.png",
     "static/media/link.png": "/static/media/link.aae5c777c618f50f4db3.png",
@@ -29,12 +34,12 @@
     "static/media/arrowleft.svg": "/static/media/arrowleft.96368eb2017c226e70bad0b67ae0d30c.svg",
     "static/media/arrow.svg": "/static/media/arrow.121b6cdb2e03a9ce8a2de4719ceea2be.svg",
     "index.html": "/index.html",
-    "main.b5f5386d.css.map": "/static/css/main.b5f5386d.css.map",
-    "main.486d1864.js.map": "/static/js/main.486d1864.js.map",
+    "main.9f312db9.css.map": "/static/css/main.9f312db9.css.map",
+    "main.db6dbbb1.js.map": "/static/js/main.db6dbbb1.js.map",
     "787.387537db.chunk.js.map": "/static/js/787.387537db.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b5f5386d.css",
-    "static/js/main.486d1864.js"
+    "static/css/main.9f312db9.css",
+    "static/js/main.db6dbbb1.js"
   ]
 }
